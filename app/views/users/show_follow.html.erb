@@ -1,0 +1,35 @@
+<% provide(:title, @title) %>
+<div class="row">
+	<aside class="span4">
+	<section>
+    <%=  gravatar_for @user %>
+    <h1> <%= @user.name %></h1>
+   <span>
+	<%= link_to "view profile", @user %>
+    </span>
+    <span> <b>Tweets: <b><%= @user.microposts.count %></span>
+   <span>
+	<%=  %>
+   </span>
+		</section>
+		<section>
+      <%= render 'shared/stats' %>
+      <%  if @users.any?  %>
+      <div class="user_avatars">
+      	<% @users.each  do |user| %>
+      	<%= link_to  gravatar_for(user,size: 30), user%>  <%# gravatar_for(user, size: 30), %>
+      	<% end %>
+      </div>
+      <% end %>
+		</section>	
+	</aside>
+	<div class="span8">
+		<h3><%= @title %></h3>
+		<% if @users.any? %>
+		<ul class="user">
+				<li><%= render @users %></li>
+		</ul>
+		<%= will_paginate %>
+		<% end %>
+	</div>	
+</div>

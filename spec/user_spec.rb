@@ -13,7 +13,7 @@
 
 require 'spec_helper'
 
-describe "User" do
+describe User do
 
  before do
   @user = User.new(name: "divine", email:"dube@example.com", password: "password", password_confirmation: "password"  )
@@ -21,26 +21,23 @@ describe "User" do
 
    subject{@user}
 
-
-
+   it { should respond_to(:feed)}
+   it { should respond_to(:relationships)}
+   it { should respond_to(:followed_users)}
+   it { should respond_to(:following?)}
+   it { should respond_to(:follow!)}
+   it { should respond_to(:reverse_relationships)}
+   it { should respond_to(:followers)}
    it { should respond_to(:name)}
-
-   it {should respond_to(:email)}
-
-   it {should respond_to(:remember_token)}
-
-   it {should respond_to(:authenticate)}
-
+   it { should respond_to(:email)}
+   it { should respond_to(:remember_token)}
+   it { should respond_to(:authenticate)}
    it { should respond_to(:microposts)}
+   it { should respond_to(:password_digest)}
+   it { should respond_to(:password)}
+   it { should respond_to(:password_confirmation)}
 
-   it {should respond_to(:password_digest)}
-
-   it {should respond_to(:password)}
-
-   it {should respond_to(:password_confirmation)}
-
-
-   it {should be_valid}
+   it { should be_valid}
 
    describe "user name can not be blank " do 
     before {@user.name = " "}
@@ -138,6 +135,25 @@ describe "remember token" do
     microposts.each do |micropost|
       Micropost.find_by_id(micropost.id).should be_nil
    end
+  end
+ end
+
+ describe " following " do
+  let(:other_user) { FactoryGirl.create(:user)}
+  before do
+    @user.save
+    @user.follow!(other_user)
+  end
+
+  it { should be_following(other_user) }
+  its(:followed_users) { should include(other_user)}
+
+  it { should be_following(other_user)}
+  its(:followed_users) { should include(other_user)}
+
+  describe "followed user" do
+    subject { other_user }
+    its(:followers) { should include(@user)}
   end
  end
 end

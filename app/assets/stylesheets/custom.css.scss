@@ -100,7 +100,7 @@ footer{
   	float: left;
   	width: 100%;
   	margin-top: 45px;
-  	@inclued box_sizing
+  	@include box_sizing
   }
 
 }
@@ -138,7 +138,7 @@ footer{
  	height: auto;
  	margin-bottom: 15px;
 
- 	@inclued box-sizing;
+ 	@include box-sizing;
 
  }
  #error_explanation{
@@ -155,7 +155,7 @@ footer{
  }
  .user{
   list-style: none;
-  margin: 0;
+  margin: 0; //remove this line to see a mess
   li{
     overflow: auto;
     padding: 10px 0;
@@ -185,6 +185,38 @@ footer{
   margin-right: 10px;
 }
   textarea{
-      width: 90%;
-      height: 70px;
+  //     width: 90%;
+       height: 100px;
+   }
+   /* this is the sidebar has all stats */
+.stats{
+  overflow: auto;
+  a{
+    float: left;
+     padding-left: 4px;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    &:first-child{
+      padding-left: 0;
+      border-top: 0;
+    }
+    &:hover{
+      text-decoration: none;
+      color: $blue;
+    }
   }
+  strong{
+    margin-left: 4px;
+ display: block;
+  }
+}
+.user-avatars{
+  overflow: auto;
+  margin: 10px;
+  .gravatar{
+    margin-top: 1px;
+    margin: 1px 1px;
+  }
+}
+

@@ -65,7 +65,8 @@ describe "AuthenticationPages" do
           end
           describe "when submitting to the destroy action" do
             micropost = FactoryGirl.create(:micropost)
-            delete microposts_path(micropost)
+            let(:ms) { microposts_path(micropost)}
+            delete ms
           end
           specify {should redirect_to signin_path}
       end
