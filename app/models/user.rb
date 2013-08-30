@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
     has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
     has_many :followers, through: :reverse_relationships, source: :follower
 
+    has_many :add_replies_to_microposts, foreign_key: "to_id", class_name: "AddRepliesToMicropost"
 
    before_save{ self.email.downcase!}
 
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
 
    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates  :name, presence: true , length: { maximum: 50 }
+  validates  :name, presence: true , length: { maximum: 50 }, uniqueness: true
   validates  :email, presence: true, format: { with: VALID_EMAIL_REGEX },
                                               uniqueness: {case_sensitive: false}
       validates :password, length: { minimum: 6 }
@@ -39,6 +40,7 @@ class User < ActiveRecord::Base
 
     def feed
       Micropost.from_users_followed_by(self)
+  
     end 
 
     def following?(other_user)
